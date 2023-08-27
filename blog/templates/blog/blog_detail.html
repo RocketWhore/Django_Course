@@ -1,0 +1,34 @@
+
+{% extends 'service/base.html' %}
+{% load format_path_to_avatar %}
+{% block content %}
+
+<div class="col-6">
+
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Материал {{ object.title }}</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title">slug {{ object.slug }}</h1>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <img src="{{ object.preview | format_path_to_avatar}}" >
+
+                <li> {{ object.body }} </li>
+                <li> {{ object.date_of_create }} </li>
+                <li> {{ object.sign_of_pub }} </li>]
+                <li> Просмотры: {{ object.count_view }} </li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+
+<!--    <div>-->
+<!--        {% for object in category_list %}-->
+<!--        {% include 'catalog/includes/inc_product_card.html' %} ТУТ СОЗДАМ КАРТОЧКУ СВОЮ НОВУЮ ПО КАТЕГОРНИЯМ-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+
+{% endblock %}
