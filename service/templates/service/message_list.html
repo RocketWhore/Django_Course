@@ -10,7 +10,9 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col-12 mb-5">
+            {% if not is_manager %}
             <a class="btn btn-outline-primary" href="{% url 'service:messagecreate' %}">Добавить сообщение</a>
+            {% endif %}
         </div>
         {% for object in object_list %}
         <div class="col">
@@ -20,10 +22,18 @@
                         <p class="card-text"> {{object|title}}</p>
                     </div>
                     <div class="btn-group">
-                        <a href="#" type="button"
+                        {% if perms.service.change_message and not is_manager %}
+                        <a href="{% url 'service:messageupdate' %}" type="button"
                             class="btn btn-sm btn-outline-secondary">update</a>
-                        <a href="#" type="button"
+                        {% endif %}
+                        {% if perms.service.delete_message and not is_manager %}
+                        <a href="{% url 'service:messagedelete' %}" type="button"
                             class="btn btn-sm btn-outline-secondary">Delete</a>
+                        {% endif %}
+                        {% if is_manager %}
+                        <a href="{% url 'service:block' %}" type="button"
+                            class="btn btn-sm btn-outline-secondary">BLOCK</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 from django.urls import path
 from service.views import HomeView, ClientListView, MessageListView, ClientCreateView, ClientDeleteView, \
-    ClientUpdateViev, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView
+    ClientUpdateViev, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, ActivateMessage
 from service.apps import ServiceConfig
 
 app_name = ServiceConfig.name
@@ -17,6 +17,7 @@ urlpatterns = [
     path('messagecreate', MessageCreateView.as_view(), name='messagecreate'),
     path('messageupdate/<int:pk>/', MessageUpdateView.as_view(), name='messageupdate'),
     path('messagedelete/<int:pk>/', MessageDeleteView.as_view(), name='messagedelete'),
+    path("/mailblock/<int:pk>/", ActivateMessage, name="block")
 
 
 ]

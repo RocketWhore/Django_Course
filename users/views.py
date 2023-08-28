@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Group
 from django.views.generic import (ListView,
                                   DetailView,
                                   TemplateView,
@@ -16,6 +17,12 @@ class RegisterView(CreateView):
     form_class = UserRegisterForm
     template_name = 'users/register.html'
     success_url = reverse_lazy("users:login")
+
+    def form_valid(self, form):
+        user = form.save()
+        group, created = Group.objects.get_or_create(name='users')
+        user.groups.add(group)
+        return super().form_valid(form)
 
 class UserListView(ListView):
     model = User

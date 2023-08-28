@@ -25,10 +25,17 @@ class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     permission_required = 'service.change_message'
 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_manager"] = self.request.user.groups.filter(name='manager').exists()
+        return context
+
     def get_queryset(self, *args, **kwargs):
         queryset = Message.objects.filter(user=self.request.user)
+        if self.request.user.groups.filter(name='manager').exists():
+            queryset = Message.objects.all()
         return queryset
-
 
 class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
