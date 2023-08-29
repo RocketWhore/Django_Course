@@ -16,11 +16,12 @@
                         <p class="card-text">{{object|title}}</p>
                     </div>
                     <div class="btn-group">
-                        {% if object.is_active %}
-                            <a href="{% url 'users:block' object.pk %}" type="button"class="btn btn-sm btn-outline-secondary">заблокировать</a>
-                        {% else %}
-                            <a href="{% url 'users:block' object.pk %}" type="button"class="btn btn-sm btn-outline-secondary">разблокировать</a>
-                        {% endif %}
+
+                            {% if object.is_active %}
+                                <a href="{% url 'users:block' object.pk %}" type="button"class="btn btn-sm btn-outline-secondary">заблокировать</a>
+                            {% else %}
+                                <a href="{% url 'users:block' object.pk %}" type="button"class="btn btn-sm btn-outline-secondary">разблокировать</a>
+                            {% endif %}
                     </div>
                 </div>
             </div>

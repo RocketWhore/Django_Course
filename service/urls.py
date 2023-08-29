@@ -1,15 +1,16 @@
 from django.urls import path
 from service.views import HomeView, ClientListView, MessageListView, ClientCreateView, ClientDeleteView, \
-    ClientUpdateViev, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, ActivateMessage
+    ClientUpdateView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, ActivateMessage
 from service.apps import ServiceConfig
+from django.views.decorators.cache import cache_page
 
 app_name = ServiceConfig.name
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='index'),
+    path('', cache_page(60)(HomeView.as_view()), name='index'),
     path('clients/', ClientListView.as_view(), name='clients'),
     path('/clientcreate/', ClientCreateView.as_view(), name='clientcreate'),
-    path('/clientupdate/<int:pk>/', ClientUpdateViev.as_view(), name='clientupdate'),
+    path('/clientupdate/<int:pk>/', ClientUpdateView.as_view(), name='clientupdate'),
     path('/clientdelete/<int:pk>/', ClientDeleteView.as_view(), name='clientdelete'),
 
     path('message/', MessageListView.as_view(), name='list'),

@@ -44,7 +44,7 @@ class Message(models.Model):
     status = models.PositiveSmallIntegerField(verbose_name='статус рассылки', choices=TITLE_CHOICES_STATUS, default=1)
     clients = models.ManyToManyField(Client, verbose_name='клиенты')
     user = models.ForeignKey(User, verbose_name='пользователь', on_delete=models.CASCADE, **NULLABLE)
-
+    is_active = models.BooleanField(default=True, verbose_name='состояние')
     def __str__(self):
         return f"{self.theme} {self.status}"
 

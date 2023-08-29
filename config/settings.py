@@ -158,12 +158,15 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
 
-CACHE_ENABLED = False
+CACHE_ENABLED = True
 if CACHE_ENABLED:
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
-            "TIMEOUT": 300 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
+            "BACKEND": 'redis_cache.RedisCache',
+            "LOCATION": "127.0.0.1:6379",
+
+            "OPTIONS": {
+                "PASSWORD": "ametist371",
+            }
         }
     }

@@ -28,12 +28,12 @@ class MessageListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["is_manager"] = self.request.user.groups.filter(name='manager').exists()
+        context["is_managers"] = self.request.user.groups.filter(name='managers').exists()
         return context
 
     def get_queryset(self, *args, **kwargs):
         queryset = Message.objects.filter(user=self.request.user)
-        if self.request.user.groups.filter(name='manager').exists():
+        if self.request.user.groups.filter(name='managers').exists():
             queryset = Message.objects.all()
         return queryset
 
@@ -50,7 +50,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ClientUpdateViev(LoginRequiredMixin, UpdateView):
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy("service:clients")
@@ -172,7 +172,7 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
 
 @permission_required('service.change_message')
 def ActivateMessage(request, pk):
-    mailsettings = Message.objects.get(pk=pk)
-    mailsettings.is_active = False if mailsettings.is_active else True
-    mailsettings.save()
+    message = Message.objects.get(pk=pk)
+    message.is_active = False if message.is_active else True
+    message.save()
     return redirect('service:list')

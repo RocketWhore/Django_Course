@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col-12 mb-5">
-            {% if not is_manager %}
+            {% if not is_managers %}
             <a class="btn btn-outline-primary" href="{% url 'service:messagecreate' %}">Добавить сообщение</a>
             {% endif %}
         </div>
@@ -22,17 +22,22 @@
                         <p class="card-text"> {{object|title}}</p>
                     </div>
                     <div class="btn-group">
-                        {% if perms.service.change_message and not is_manager %}
-                        <a href="{% url 'service:messageupdate' %}" type="button"
+                        {% if perms.service.change_message and not is_managers %}
+                        <a href="{% url 'service:messageupdate' object.pk %}" type="button"
                             class="btn btn-sm btn-outline-secondary">update</a>
                         {% endif %}
-                        {% if perms.service.delete_message and not is_manager %}
-                        <a href="{% url 'service:messagedelete' %}" type="button"
+                        {% if perms.service.delete_message and not is_managers %}
+                        <a href="{% url 'service:messagedelete' object.pk %}" type="button"
                             class="btn btn-sm btn-outline-secondary">Delete</a>
                         {% endif %}
-                        {% if is_manager %}
-                        <a href="{% url 'service:block' %}" type="button"
-                            class="btn btn-sm btn-outline-secondary">BLOCK</a>
+                        {% if is_managers %}
+                            {% if object.is_active%}
+                        <a href="{% url 'service:block' object.pk %}" type="button"
+                            class="btn btn-sm btn-outline-secondary">LOCK</a>
+                            {% else %}
+                        <a href="{% url 'service:block' object.pk %}" type="button"
+                            class="btn btn-sm btn-outline-secondary">UNLOCK</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
